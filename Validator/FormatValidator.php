@@ -39,6 +39,11 @@ class FormatValidator extends ConstraintValidator
     {
         $formats = $this->pool->getFormatNamesByContext($value->getContext());
 
+        // If "formats" configuration node is empty, defaultFormat is not needed
+        if(empty($formats)) {
+            return;
+        }
+
         if (!$value instanceof GalleryInterface) {
             // Interface compatibility, support for LegacyExecutionContextInterface can be removed when support for Symfony <2.5 is dropped
             if ($this->context instanceof LegacyExecutionContextInterface) {
